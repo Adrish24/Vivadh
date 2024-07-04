@@ -1,0 +1,178 @@
+import { QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import Pages from "./props/Pages";
+
+
+const App = () => {
+  
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <Pages/>
+    </QueryClientProvider>
+  );
+};
+
+export default App;
+
+import { useInfiniteQuery } from "@tanstack/react-query";
+
+import { posts } from "./posts";
+import { useEffect, useRef } from "react";
+import { useIntersection } from "@mantine/hooks";
+
+const fetchPost = async (pageNum) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return posts.slice((pageNum - 1) * 5, pageNum * 5);
+};
+
+const Pages = () => {
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ["query"],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await fetchPost(pageParam);
+      return response;
+    },
+    getNextPageParam: (_, pages) => {
+      return pages.length + 1;
+    },
+    initialData: {
+      pages: [posts.slice(0, 5)],
+      pageParams: [1],
+    },
+  });
+
+  const lastPostRef = useRef(null);
+
+  const { ref, entry } = useIntersection({
+    root: lastPostRef.current,
+    threshold: 1,
+  });
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      fetchNextPage();
+      console.log(entry);
+    }
+  }, [entry]);
+
+  const _posts = data?.pages.flatMap((page) => page);
+
+  //   useEffect(() => {
+  //     console.log(_posts);
+  //   }, [_posts]);
+  return (
+    <div>
+      {_posts?.map((post, i) => {
+        if (i === _posts.length - 1)
+          return <img className="h-80"  ref={ref} key={post.id} src={post.src} />;
+
+        return <img className="h-80" key={post.id} src={post.src} />;
+      })}
+      <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+        {isFetchingNextPage
+          ? "Loading more..."
+          : (data?.pages.length ?? 0) < 3
+          ? "Load more"
+          : "Nothing more to load"}
+      </button>
+    </div>
+  );
+};
+
+export default Pages;
+
+
+
+
+
+
+
+
+
+
+
+
+ const handleVoteCalculation = async(
+    single,
+    array,
+    setArray,
+    isRedux,
+    dispatch,
+    up,
+    down,
+    type,
+    prev
+  ) => {
+    // console.log(up, down, type, prev);
+
+    if (!currentUser) return;
+
+    if (type === "upVote") {
+      if (isSingle) {
+        // For single post
+        dispatch(
+          addProperties({
+            vote_count: up
+              ? prev === "downVote"
+                ? single.vote_count + 2
+                : single.vote_count + 1
+              : single.vote_count - 1,
+          })
+        );
+      } else {
+        // For multiple posts
+        const tempArray = array.map((p) => {
+          return {
+            ...p,
+            vote_count:
+              p._id === single._id
+                ? up
+                  ? prev === "downVote"
+                    ? p.vote_count + 2
+                    : p.vote_count + 1
+                  : p.vote_count - 1
+                : p.vote_count,
+          };
+        });
+
+        if (isRedux) {
+          dispatch(setArray(tempArray));
+        } else {
+          setArray(tempArray);
+        }
+      }
+    }
+
+    if (type === "downVote") {
+      if (isSingle) {
+        dispatch(
+          addProperties({
+            vote_count: down
+              ? prev === "upVote"
+                ? single.vote_count - 2
+                : single.vote_count - 1
+              : single.vote_count + 1,
+          })
+        );
+      } else {
+        const tempArray = array.map((p) => {
+          return {
+            ...p,
+            vote_count:
+              p._id === single._id
+                ? down
+                  ? prev === "upVote"
+                    ? p.vote_count - 2
+                    : p.vote_count - 1
+                  : p.vote_count + 1
+                : p.vote_count,
+          };
+        });
+
+        if (isRedux) {
+          dispatch(setArray(tempArray));
+        } else {
+          setArray(tempArray);
+        }
+      }
+    }
+  };
