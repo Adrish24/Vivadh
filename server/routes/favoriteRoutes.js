@@ -3,6 +3,7 @@ import favorites from "../mongodb/models/favorites.js";
 import post from "../mongodb/models/post.js";
 import vote from "../mongodb/models/vote.js";
 import user from "../mongodb/models/user.js";
+import comment from "../mongodb/models/comment.js";
 
 const router = express.Router();
 
@@ -13,11 +14,13 @@ router.route("/").get(async (req, res) => {
     const favRefs = await favorites.find({ _userId: currentUserId });
     const newFavs = favRefs.map(async (f) => {
       const fav = await post.findOne({ _id: f._postId });
+      
 
       if (!fav) return;
 
       const votes = await vote.find({ _id: fav?.vote_ref });
       const userInfo = await user.findOne({ _id: currentUserId });
+      const comments = await comment.find({ _postId: fav?._id });
 
       // check if current user has given votes to each post
       const currentUserGivenVote = votes.find(
@@ -34,6 +37,7 @@ router.route("/").get(async (req, res) => {
         upVote: currentUserGivenVote?.voteType === "upVote" ? true : false,
         downVote: currentUserGivenVote?.voteType === "downVote" ? true : false,
         vote_count: newVoteCount,
+        comments_count: comments.length,
       };
     });
 
