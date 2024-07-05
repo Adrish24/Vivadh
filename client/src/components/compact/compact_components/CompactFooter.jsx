@@ -36,7 +36,7 @@ const CompactFooter = ({
       setLoading(true);
       try {
         const res = await axios.post(
-          "http://localhost:5000/favorites",
+          "https://vivadh.onrender.com/favorites",
           {
             single: single,
             currentUserId: currentUser?._id,

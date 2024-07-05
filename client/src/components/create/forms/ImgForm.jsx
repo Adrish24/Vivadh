@@ -36,7 +36,7 @@ const ImgForm = ({ setShow }) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/post/?type=${fileType}`,
+        `https://vivadh.onrender.com/post/?type=${fileType}`,
         { form: form, user: currentUser },
         {
           headers: { "Content-Type": "application/json" },

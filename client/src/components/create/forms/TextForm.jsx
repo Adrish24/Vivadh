@@ -36,7 +36,7 @@ const TextForm = ({ setShow }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/post/?type=text",
+        "https://vivadh.onrender.com/post/?type=text",
         { form: form, user: currentUser },
         {
           headers: { "Content-Type": "application/json" },

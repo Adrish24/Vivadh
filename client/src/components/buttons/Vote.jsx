@@ -26,7 +26,7 @@ const Vote = ({ single, isSingle, array, setArray, handlePropagation }) => {
     // console.log(currentUser?._id);
     try {
       await axios.post(
-        "http://localhost:5000/vote",
+        "https://vivadh.onrender.com/vote",
         {
           type: string,
           postId: single._id,

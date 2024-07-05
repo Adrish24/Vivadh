@@ -19,7 +19,7 @@ const Home = () => {
   const fetchPosts = async () => {
     try {
       const res = await fetcher(
-        `http://localhost:5000/post/?currentUserId=${currentUser._id}`
+        `https://vivadh.onrender.com/post/?currentUserId=${currentUser._id}`
       );
       if (res.success) {
         dispatch(setPosts(res.data));
@@ -32,7 +32,7 @@ const Home = () => {
   const fetchFavs = async () => {
     try {
       const res = await fetcher(
-        `http://localhost:5000/favorites/?currentUserId=${currentUser._id}`
+        `https://vivadh.onrender.com/favorites/?currentUserId=${currentUser._id}`
       );
       if (res) {
         // console.log(res);
@@ -70,7 +70,7 @@ const Home = () => {
     `}
     >
       <FilterPost />
-      {posts.length > 0 ? (
+      {posts?.length > 0 ? (
         posts.map((post) =>
           view === "Card" ? (
             <Card
@@ -91,10 +91,10 @@ const Home = () => {
         )
       ) : (
         <div className="w-full text-center py-10 text-xl">
-          <h1>Something went wrong!</h1>
+          <h1>Something went wrong or server starting... (within 50 seconds)</h1>
         </div>
       )}
-      <div className="h-32 w-full">No more post available</div>
+      <div className="h-32 w-full">No post available</div>
     </div>
   );
 };

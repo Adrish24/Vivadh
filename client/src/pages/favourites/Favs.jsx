@@ -17,7 +17,7 @@ const Favs = () => {
   const fetchFavs = async () => {
     try {
       const res = await fetcher(
-        `http://localhost:5000/favorites/?currentUserId=${currentUser._id}`
+        `https://vivadh.onrender.com/favorites/?currentUserId=${currentUser._id}`
       );
       if (res) {
         // console.log(res);
@@ -36,9 +36,9 @@ const Favs = () => {
     }
   }, [currentUser]);
 
-  // useEffect(() => {
-  //   console.log(favs);
-  // }, [favs]);
+  useEffect(() => {
+    console.log(favs);
+  }, [favs]);
 
   // useEffect(() => {
   //   console.log(posts)

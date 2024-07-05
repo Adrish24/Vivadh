@@ -21,7 +21,7 @@ const Comments = () => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     try {
       const res = await fetcher(
-        `http://localhost:5000/post/${id}/?currentUserId=${user?._id}`
+        `https://vivadh.onrender.com/post/${id}/?currentUserId=${user?._id}`
       );
       if (res.success) {
         // console.log(res.data);
@@ -34,7 +34,7 @@ const Comments = () => {
 
   const fetchComments = async (id) => {
     try {
-      const res = await fetcher(`http://localhost:5000/comments/${id}`);
+      const res = await fetcher(`https://vivadh.onrender.com/comments/${id}`);
       if (res.success) {
         // console.log(res.data);
         dispatch(setComments(res.data));

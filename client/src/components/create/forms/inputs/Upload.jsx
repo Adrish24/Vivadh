@@ -95,7 +95,7 @@ const Upload = ({
       }
       try {
         const res = await axios.post(
-          "http://localhost:5000/upload/?type=video",
+          "https://vivadh.onrender.com/upload/?type=video",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -131,7 +131,7 @@ const Upload = ({
       }
       try {
         const res = await axios.post(
-          "http://localhost:5000/upload/?type=image",
+          "https://vivadh.onrender.com/upload/?type=image",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -161,7 +161,7 @@ const Upload = ({
       setLoading(true);
       try {
         const res = await axios.post(
-          `http://localhost:5000/upload/delete/?type=${fileType}`,
+          `https://vivadh.onrender.com/upload/delete/?type=${fileType}`,
           { public_id: publicId },
           {
             headers: { "Content-Type": "application/json" },

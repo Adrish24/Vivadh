@@ -25,7 +25,7 @@ const SignUp = ({ hasAccount }) => {
       setIsLoading(true);
       try {
         const res = await axios.post(
-          "http://localhost:5000/auth/signup",
+          "https://vivadh.onrender.com/auth/signup",
           form,
           {
             headers: { "Content-Type": "application/json" },

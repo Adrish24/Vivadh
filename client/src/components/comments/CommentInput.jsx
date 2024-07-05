@@ -57,7 +57,7 @@ const CommentInput = ({ user, postId }) => {
     } else {
       try {
         const res = await axios.post(
-          "http://localhost:5000/comments",
+          "https://vivadh.onrender.com/comments",
           { form, postId, user },
           {
             headers: { "Content-Type": "application/json" },

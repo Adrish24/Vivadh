@@ -15,7 +15,7 @@ const DeleteItem = ({ form, setForm, handleClose, fileType }) => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `http://localhost:5000/upload/delete/?type=${fileType}`,
+        `https://vivadh.onrender.com/upload/delete/?type=${fileType}`,
         { public_id: publicId },
         {
           headers: { "Content-Type": "application/json" },
@@ -38,7 +38,7 @@ const DeleteItem = ({ form, setForm, handleClose, fileType }) => {
     const publicIds = tempArray.map((item) => item.public_id);
     try {
       const res = await axios.post(
-        "http://localhost:5000/upload/deleteAll",
+        "https://vivadh.onrender.com/upload/deleteAll",
         { public_ids: publicIds },
         {
           headers: { "Content-Type": "application/json" },
