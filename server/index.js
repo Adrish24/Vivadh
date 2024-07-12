@@ -19,7 +19,7 @@ app.use(cors({
   origin: 'http://localhost:5173',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization', 'multipart/form-data']
-));
+}));
 app.use(express.json({ limit: "50mb" }));
 
 app.use("/auth", signup);
