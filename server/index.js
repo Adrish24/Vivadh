@@ -16,7 +16,7 @@ const port = 5000;
 dotenv.config();
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: '*',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization', 'multipart/form-data']
 }));
