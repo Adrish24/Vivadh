@@ -85,7 +85,6 @@ router.route("/").post(async (req, res) => {
   const { form, user } = req.body;
   const { type } = req.query;
   console.log(type);
-  const imageUrls = form.body.map((image) => image.url);
   try {
     const data = await post.create({
       _userId: user._id,
@@ -94,7 +93,7 @@ router.route("/").post(async (req, res) => {
       content: type === "text" ? form.body : null,
       topic: form.topic,
       flair: form.flair,
-      images: type === "image" ? imageUrls : [],
+      images: type === "image" ? form.body.map((image) => image.url) : [],
       video: type === "video" ? form.body : [],
     });
     res
