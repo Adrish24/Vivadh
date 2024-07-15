@@ -84,7 +84,7 @@ router.route("/").get(async (req, res) => {
 router.route("/").post(async (req, res) => {
   const { form, user } = req.body;
   const { type } = req.query;
-
+  console.log(type);
   const imageUrls = form.body.map((image) => image.url);
   try {
     const data = await post.create({
